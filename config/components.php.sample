@@ -8,6 +8,7 @@
 
 return [
     'composer' => \scripts\Composer::class,
+    'git' => \scripts\Git::class,
     'cron' => \scripts\Cron::class,
     'MemCached' => \scripts\MemCached::class,
     'mongo db' => \scripts\Mongo::class,
