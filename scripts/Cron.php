@@ -12,9 +12,9 @@ namespace scripts;
  * Class Cron
  * @package scripts
  *
- * @method array|null restart static
- * @method array|null start static
- * @method array|null stop static
+ * @method array|null restart
+ * @method array|null start
+ * @method array|null stop
  */
 final class Cron extends Scripts
 {

@@ -12,9 +12,9 @@ namespace scripts;
  * Class MemCached
  * @package scripts
  *
- * @method array|null memcacheRestart static
- * @method array|null memcacheStart static
- * @method array|null memcacheStop static
+ * @method array|null memcacheRestart
+ * @method array|null memcacheStart
+ * @method array|null memcacheStop
  */
 class MemCached extends Scripts
 {

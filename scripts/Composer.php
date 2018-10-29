@@ -12,7 +12,7 @@ namespace scripts;
  * Class Composer
  * @package scripts
  *
- * @method array|null install static
+ * @method array|null install
  */
 final class Composer extends Scripts
 {

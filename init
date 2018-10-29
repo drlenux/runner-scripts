@@ -8,14 +8,27 @@
  */
 
 use app\ConsoleHelper;
+use yii\helpers\ArrayHelper;
 
 require __DIR__ . '/vendor/autoload.php';
 
 ConsoleHelper::fillLine('Init');
-$dir = ConsoleHelper::readParams('project dir');
-$project = ConsoleHelper::readParams('project name');
 
 $configPath = __DIR__ . '/config/';
+
+$projectDefault = '';
+$projectDir = '';
+
+if (file_exists($configPath . 'main.php')) {
+    $config = require $configPath . 'main.php';
+    $projectDefault = ArrayHelper::getValue($config, 'default.project');
+    $dirDefault = ArrayHelper::getValue($config, 'default.dir');
+    unset($config);
+    unlink($configPath . 'main.php');
+}
+
+$dir = ConsoleHelper::readParams('project dir', $projectDefault);
+$project = ConsoleHelper::readParams('project name', $dirDefault);
 
 $config = file_get_contents($configPath . 'main.php.sample');
 $config = str_replace('{%project%}', $project, $config);

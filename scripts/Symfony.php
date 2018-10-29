@@ -12,8 +12,8 @@ namespace scripts;
  * Class Symfony
  * @package scripts
  *
- * @method array|null manifest_generate static
- * @method array|null generate_translate static
+ * @method array|null manifest_generate
+ * @method array|null generate_translate
  */
 final class Symfony extends Scripts
 {

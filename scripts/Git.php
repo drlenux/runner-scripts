@@ -11,6 +11,10 @@ namespace scripts;
 /**
  * Class Git
  * @package scripts
+ *
+ * @method array|null pull
+ * @method array|null push
+ * @method array|null status
  */
 class Git extends Scripts
 {

@@ -12,9 +12,9 @@ namespace scripts;
  * Class MySQL
  * @package scripts
  *
- * @method array|null migrate static
- * @method array|null rollback static
- * @method array|null dropDB static
+ * @method array|null migrate
+ * @method array|null rollback
+ * @method array|null dropDB
  */
 final class MySQL extends Scripts
 {

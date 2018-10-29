@@ -11,6 +11,13 @@ namespace scripts;
 /**
  * Class InstallAll
  * @package scripts
+ *
+ * @method array vagrant_reload
+ * @method array vagrant_provision
+ * @method array drop_db
+ * @method array composer_install
+ * @method array db_migrate
+ * @method array mongo_update
  */
 class InstallAll extends Scripts
 {
@@ -19,21 +26,13 @@ class InstallAll extends Scripts
      */
     public function getListScripts()
     {
-        var_dump([
-            'vagrant_reload' => Vagrant::reload(),
-            'vagrant_provision' => Vagrant::provision(),
-            'drop_db' => MySQL::dropDB(),
-            'composer_install' => Composer::install(),
-            'db_migrate' => MySQL::migrate(),
-            'mongo_update' => Mongo::update(),
-        ]);
         return [
-            'vagrant_reload' => Vagrant::reload(),
-            'vagrant_provision' => Vagrant::provision(),
-            'drop_db' => MySQL::dropDB(),
-            'composer_install' => Composer::install(),
-            'db_migrate' => MySQL::migrate(),
-            'mongo_update' => Mongo::update(),
+            'vagrant_reload' => Vagrant::getInstance()->reload(),
+            'vagrant_provision' => Vagrant::getInstance()->provision(),
+            'drop_db' => MySQL::getInstance()->dropDB(),
+            'composer_install' => Composer::getInstance()->install(),
+            'db_migrate' => MySQL::getInstance()->migrate(),
+            'mongo_update' => Mongo::getInstance()->update(),
         ];
     }
 }

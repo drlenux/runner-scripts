@@ -13,8 +13,8 @@ namespace scripts;
  * Class Mongo
  * @package scripts
  *
- * @method array|null create static
- * @method array|null update static
+ * @method array|null create
+ * @method array|null update
  */
 final class Mongo extends Scripts
 {

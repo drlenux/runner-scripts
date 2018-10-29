@@ -14,11 +14,11 @@ use yii\helpers\ArrayHelper;
  * Class Vagrant
  * @package scripts
  *
- * @method array|null up static
- * @method array|null halt static
- * @method array|null status static
- * @method array|null reload static
- * @method array|null provision static
+ * @method array|null up
+ * @method array|null halt
+ * @method array|null status
+ * @method array|null reload
+ * @method array|null provision
  */
 final class Vagrant extends Scripts
 {
