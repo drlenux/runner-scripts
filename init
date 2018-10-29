@@ -17,7 +17,7 @@ ConsoleHelper::fillLine('Init');
 $configPath = __DIR__ . '/config/';
 
 $projectDefault = '';
-$projectDir = '';
+$dirDefault = '';
 
 if (file_exists($configPath . 'main.php')) {
     $config = require $configPath . 'main.php';
