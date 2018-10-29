@@ -56,17 +56,15 @@ main() {
     exit 1
   }
 
-  cd ~/.runner-scripts/ &&
-    composer install &&
-    ./init &&
-    sudo chmod +x ~/.runner-scripts/run &&
-    sudo chmod +x ~/.runner-scripts/update.sh &&
-    sudo chmod +x ~/.runner-scripts/unistall.sh &&
-    sudo chmod +x ~/.runner-scripts/init &&
-    sudo ln -s ~/.runner-scripts/run /usr/bin/runners &&
-    sudo ln -s ~/.runner-scripts/update.sh /usr/bin/runners-update &&
-    sudo ln -s ~/.runner-scripts/unistall.sh /usr/bin/runners-unistall &&
-    echo "run: runners"
+  cd ~/.runner-scripts/ && composer install && ./init
+
+  sudo chmod +x ~/.runner-scripts/run
+  sudo chmod +x ~/.runner-scripts/update.sh
+  sudo chmod +x ~/.runner-scripts/unistall.sh
+  sudo chmod +x ~/.runner-scripts/init
+  sudo ln -s ~/.runner-scripts/run /usr/bin/runners
+  sudo ln -s ~/.runner-scripts/update.sh /usr/bin/runners-update
+  sudo ln -s ~/.runner-scripts/unistall.sh /usr/bin/runners-unistall
 
   printf "${NORMAL}"
 }
