@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-git pull && ./init
+cd ~/.runner-scripts/ && git pull && ./init
