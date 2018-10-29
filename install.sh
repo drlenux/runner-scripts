@@ -56,7 +56,8 @@ main() {
     exit 1
   }
 
-  cd ~/.runner-scripts/ && composer install && ./init
+  cd ~/.runner-scripts/ && composer install && ./init && sudo chmod +x ~/.runner-scripts/run && sudo ln -s ~/project/php_scripts/run2/run /usr/bin/runners
+  echo "run: runners"
 
   printf "${NORMAL}"
 }
