@@ -27,8 +27,8 @@ if (file_exists($configPath . 'main.php')) {
     unlink($configPath . 'main.php');
 }
 
-$dir = ConsoleHelper::readParams('project dir', $projectDefault);
-$project = ConsoleHelper::readParams('project name', $dirDefault);
+$dir = ConsoleHelper::readParams('project dir', $dirDefault);
+$project = ConsoleHelper::readParams('project name', $projectDefault);
 
 $config = file_get_contents($configPath . 'main.php.sample');
 $config = str_replace('{%project%}', $project, $config);
