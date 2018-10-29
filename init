@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: noname
+ * Date: 29.10.18
+ * Time: 11:35
+ */
+
+use app\ConsoleHelper;
+
+require __DIR__ . '/vendor/autoload.php';
+
+ConsoleHelper::fillLine('Init');
+$dir = ConsoleHelper::readParams('project dir');
+$project = ConsoleHelper::readParams('project name');
+
+$configPath = __DIR__ . '/config/';
+
+$config = file_get_contents($configPath . 'main.php.sample');
+$config = str_replace('{%project%}', $project, $config);
+$config = str_replace('{%dir%}', $dir, $config);
+
+file_put_contents($configPath . 'main.php', $config);
+
+copy($configPath . 'components.php.sample', $configPath . 'components.php');
+
+ConsoleHelper::fillLine('Complete.');

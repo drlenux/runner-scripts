@@ -1,0 +1,18 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: noname
+ * Date: 25.10.18
+ * Time: 12:46
+ */
+
+return [
+    'composer' => \scripts\Composer::class,
+    'cron' => \scripts\Cron::class,
+    'MemCached' => \scripts\MemCached::class,
+    'mongo db' => \scripts\Mongo::class,
+    'MySQL' => \scripts\MySQL::class,
+    'Symfony' => \scripts\Symfony::class,
+    'Vagrant' => \scripts\Vagrant::class,
+    'Install all' => \scripts\InstallAll::class,
+];

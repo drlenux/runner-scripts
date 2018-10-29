@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: noname
+ * Date: 25.10.18
+ * Time: 12:31
+ */
+
+set_time_limit(0);
+ob_implicit_flush();
+
+require __DIR__ . '/vendor/autoload.php';
+
+$config = require __DIR__ . '/config/main.php';
+
+\app\App::getInstance()->setConfig($config)->run();
