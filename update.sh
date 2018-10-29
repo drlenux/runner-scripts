@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cd ~/.runner-scripts/ && git pull && ./init
+cd ~/.runner-scripts/ && git reset --hard  && git pull && ./init
