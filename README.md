@@ -23,7 +23,7 @@ runners-unistall
 
 ## require
 
-- php: `>= 5.6`
+- php `>= 5.6`
 - composer
 - ext-yaml
 - ext-json
