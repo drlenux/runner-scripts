@@ -1,3 +1,4 @@
+---
 manifest_generate:
   field: "manifest generate"
   script: "vagrant ssh -c 'cd /www && sudo php ./bin/console assets:manifest:generate'"
@@ -7,3 +8,4 @@ generate_translate:
 clear_cache:
   field: "clear symfony cache"
   script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:clear'"
+...

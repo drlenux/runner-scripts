@@ -1,3 +1,0 @@
-install:
-  field: "composer install"
-  script: "vagrant ssh -c 'cd /www && sudo php ./composer.phar install'"

@@ -19,11 +19,6 @@ use yii\helpers\Console;
 class Runner
 {
     /**
-     * @var array
-     */
-    private $runnersList = [];
-
-    /**
      * Runner constructor.
      * @throws \yii\console\Exception
      */
@@ -38,22 +33,11 @@ class Runner
 
     /**
      * @param array $list
+     * @param int $numbering
      * @param bool $isBack
      * @throws \yii\console\Exception
      */
-    private function renderList(array $list, $isBack = false)
-    {
-        for ($i = 1; $i <= count($list); $i++) {
-            ConsoleHelper::writeln('[' . $i . ']: ' . $list[$i-1]['name']);
-        }
 
-        if ($isBack) {
-            ConsoleHelper::writeln('[*]: run all');
-            ConsoleHelper::writeln('[0]: back');
-        } else {
-            ConsoleHelper::writeln('[0]: exit');
-        }
-    }
 
     /**
      * @param $title
@@ -65,13 +49,13 @@ class Runner
     private function run($title, array $scripts, $isScript = false)
     {
         ConsoleHelper::fillLine($title);
+
         $this->modifiedArray($scripts);
-        $this->renderList($scripts, $isScript);
+        RenderList::getInstance()->run($scripts, $isScript);
         $select = new Select('run');
 
         if ('*' === $select->get() && $isScript) {
-            $this->runAll($title, $scripts);
-            ConsoleHelper::readParams('press enter');
+            Exec::getInstance()->runAll($title, $scripts);
             return $this->run($title, $scripts, $isScript);
         }
 
@@ -81,59 +65,15 @@ class Runner
             }
             return true;
         }
-
+        $script = $scripts[$select->getInt() - 1];
         if ($isScript) {
-            $this->exec(
-                $scripts[$select->getInt() - 1]['field'],
-                $scripts[$select->getInt() - 1]['script']
-            );
-            ConsoleHelper::readParams('press enter');
-            return $this->run($title, $scripts, $isScript);
+            Exec::getInstance()->run($script);
+            return $this->run($title, App::getInstance()->getScript($title), $isScript);
         } else {
-            $selectName = $scripts[$select->getInt() - 1]['name'];
+            $selectName = $script['name'];
             return $this->run($selectName, App::getInstance()->getScript($selectName),true);
         }
 
-    }
-
-    /**
-     * @param $field
-     * @param $script
-     * @throws \yii\console\Exception
-     */
-    private function exec($field, $script)
-    {
-        while (@ ob_end_flush()) ;
-        ConsoleHelper::writeln();
-        ConsoleHelper::writeln('>[' . $field . '] : run ...');
-        $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . ' && ' . $script;
-        $proc = popen($command, 'r');
-        while (!feof($proc)) {
-            Console::stdout(fread($proc, 4096));
-            @ flush();
-        }
-        ConsoleHelper::writeln();
-        ConsoleHelper::writeln('>[' . $field . '] : done.');
-    }
-
-    /**
-     * @param $title
-     * @param array $scripts
-     * @throws \yii\console\Exception
-     */
-    private function runAll($title, array $scripts)
-    {
-        $done = 1;
-        $total = count($scripts);
-        Console::startProgress($done, $total, $title);
-        foreach ($scripts as $run) {
-            $field = ArrayHelper::getValue($run, 'field', '');
-            $script = ArrayHelper::getValue($run, 'script', '');
-
-            Console::updateProgress($done++, $total, $title . '-' . $field);
-            $this->exec($field, $script);
-        }
-        Console::endProgress();
     }
 
     public function modifiedArray(array &$list)

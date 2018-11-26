@@ -1,3 +1,4 @@
+---
 stop:
   field: "cron stop"
   script: "vagrant ssh -c 'sudo /sbin/service crond stop'"
@@ -7,4 +8,4 @@ start:
 restart:
   field: "cron restart"
   script: "vagrant ssh -c 'sudo /sbin/service crond restart'"
-  
+...

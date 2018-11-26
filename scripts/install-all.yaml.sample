@@ -1,3 +1,4 @@
+---
 reload:
   field: "vagrant reload"
   script: "vagrant reload"
@@ -16,3 +17,4 @@ migrate:
 update:
   field: "mongo update"
   script: "vagrant ssh -c 'cd /www && sudo php ./bin/console doctrine:mongo:schema:update'"
+...

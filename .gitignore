@@ -1,5 +1,6 @@
 /vendor/*
 /composer.lock
 /.idea/*
-/config/main.php
-/config/components.php
+/config/*.php
+/scripts/*.yaml
+/config/top-scripts.yaml

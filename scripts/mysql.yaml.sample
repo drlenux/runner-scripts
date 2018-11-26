@@ -1,3 +1,4 @@
+---
 dropDB:
   field: "drop database"
   script: "vagrant ssh -c 'sudo mysql -u root -e \"DROP DATABASE db_site\"'"
@@ -7,3 +8,4 @@ rollback:
 migrate:
   field: "mysql migrate"
   script: "vagrant ssh -c 'cd /www/migration && sudo bash ./vendor/bin/phinx migrate'"
+...
