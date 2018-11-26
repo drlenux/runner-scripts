@@ -1,12 +1,12 @@
 reload:
   field: "vagrant reload"
   script: "vagrant reload"
-provision:
-  field: "vagrant provision"
-  script: "vagrant provision"
 dropDB:
   field: "drop database"
   script: "vagrant ssh -c 'sudo mysql -u root -e \"DROP DATABASE db_site\"'"
+provision:
+  field: "vagrant provision"
+  script: "vagrant provision"
 install:
   field: "composer install"
   script: "vagrant ssh -c 'cd /www && sudo php ./composer.phar install'"
