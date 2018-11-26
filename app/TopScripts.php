@@ -62,6 +62,7 @@ final class TopScripts extends Singleton
      */
     public function set(array $script)
     {
+        unset($script['name']);
         $this->update($script);
         $this->save();
     }
@@ -72,7 +73,7 @@ final class TopScripts extends Singleton
     public function getTop()
     {
         arsort($this->top);
-        $top = array_slice($this->top, 0, 6);
+        $top = array_slice($this->top, 0, 4);
         $res = [];
 
         foreach (array_keys($top) as $hash) {

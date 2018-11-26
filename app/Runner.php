@@ -54,9 +54,14 @@ class Runner
         RenderList::getInstance()->run($scripts, $isScript);
         $select = new Select('run');
 
+
         if ('*' === $select->get() && $isScript) {
             Exec::getInstance()->runAll($title, $scripts);
             return $this->run($title, $scripts, $isScript);
+        }
+
+        if ($this->checkTopClick($select)) {
+            return true;
         }
 
         if (0 === $select->getInt()) {
@@ -73,7 +78,19 @@ class Runner
             $selectName = $script['name'];
             return $this->run($selectName, App::getInstance()->getScript($selectName),true);
         }
+    }
 
+    private function checkTopClick(Select $select)
+    {
+        $diff = ord('a');
+        $selectId = ord($select->get()) - $diff;
+        if ($selectId >= 0 && $selectId <= 4) {
+            $script = TopScripts::getInstance()->getTop()[$selectId];
+            if (null !== $script)
+                Exec::getInstance()->run($script);
+            return true;
+        }
+        return false;
     }
 
     public function modifiedArray(array &$list)
