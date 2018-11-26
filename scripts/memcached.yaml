@@ -1,0 +1,9 @@
+stop:
+  field: 'memcached: stop'
+  script: "vagrant ssh -c 'sudo systemctl stop memcached'"
+start:
+  field: 'memcached: start'
+  script: "vagrant ssh -c 'sudo systemctl start memcached'"
+restart:
+  field: "memcached: restart"
+  script: "vagrant ssh -c 'sudo systemctl restart memcached'"

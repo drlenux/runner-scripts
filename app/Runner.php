@@ -31,72 +31,69 @@ class Runner
     {
         $components = App::getInstance()->getConfig('components', []);
         do {
+            Console::clearScreen();
             $isContinue = $this->run('Commands list', $components);
         } while ($isContinue);
     }
 
     /**
-     * @param array $lists
-     * @param bool $isClass
+     * @param array $list
+     * @param bool $isBack
      * @throws \yii\console\Exception
      */
-    private function getList(array $lists, $isClass = false)
+    private function renderList(array $list, $isBack = false)
     {
-        $back = ($isClass) ? 'back' : 'exit';
-        ConsoleHelper::writeln();
-        ConsoleHelper::writeln(">0 [{$back}]");
-        for ($i = 1; $i <= count($lists); $i++) {
-            ConsoleHelper::writeln(">{$i} [{$lists[$i-1]}]");
-            $this->runnersList[$i] = $lists[$i - 1];
+        for ($i = 1; $i <= count($list); $i++) {
+            ConsoleHelper::writeln('[' . $i . ']: ' . $list[$i-1]['name']);
         }
-        if ($isClass) {
-            ConsoleHelper::writeln('>* [run all]');
+
+        if ($isBack) {
+            ConsoleHelper::writeln('[*]: run all');
+            ConsoleHelper::writeln('[0]: back');
+        } else {
+            ConsoleHelper::writeln('[0]: exit');
         }
     }
 
     /**
      * @param $title
      * @param array $scripts
-     * @param Scripts|null $class
+     * @param bool $isScript
      * @return bool
      * @throws \yii\console\Exception
      */
-    private function run($title, array $scripts, $class = null)
+    private function run($title, array $scripts, $isScript = false)
     {
         ConsoleHelper::fillLine($title);
-        $this->getList(array_keys($scripts), (null !== $class));
-        $run = ConsoleHelper::readParams('run');
+        $this->modifiedArray($scripts);
+        $this->renderList($scripts, $isScript);
+        $select = new Select('run');
 
-        $run = trim($run);
-        if ('0' === strval($run))
-            return false;
+        if ('*' === $select->get() && $isScript) {
+            $this->runAll($title, $scripts);
+            ConsoleHelper::readParams('press enter');
+            return $this->run($title, $scripts, $isScript);
+        }
 
-        if (null !== $class && '*' === $run) {
-            $this->runAll($title, $class);
+        if (0 === $select->getInt()) {
+            if (!$isScript) {
+                return false;
+            }
             return true;
         }
 
-        $commandName = $this->runnersList[$run];
-        if (null === $class) {
-            /** @var Scripts $realScript */
-            $realScript = $scripts[$commandName];
-            $list = array_flip($realScript::getInstance()->getList());
-            foreach ($list as $key => &$value) {
-                $value = $key;
-            }
-            $run = $this->run($commandName, $list, $realScript);
-            if ($run) {
-                ConsoleHelper::readParams('press enter to continue');
-            }
-        } else {
-            $exec = $class::getInstance()->{$commandName}();
-
+        if ($isScript) {
             $this->exec(
-                ArrayHelper::getValue($exec, 'field', ''),
-                ArrayHelper::getValue($exec, 'script', '')
+                $scripts[$select->getInt() - 1]['field'],
+                $scripts[$select->getInt() - 1]['script']
             );
+            ConsoleHelper::readParams('press enter');
+            return $this->run($title, $scripts, $isScript);
+        } else {
+            $selectName = $scripts[$select->getInt() - 1]['name'];
+            return $this->run($selectName, App::getInstance()->getScript($selectName),true);
         }
-        return true;
+
     }
 
     /**
@@ -121,22 +118,34 @@ class Runner
 
     /**
      * @param $title
-     * @param Scripts $class
+     * @param array $scripts
      * @throws \yii\console\Exception
      */
-    private function runAll($title, $class)
+    private function runAll($title, array $scripts)
     {
-        $done = 0;
-        $total = count($this->runnersList);
+        $done = 1;
+        $total = count($scripts);
         Console::startProgress($done, $total, $title);
-        foreach ($this->runnersList as $run) {
-            Console::updateProgress($done++, $total, $title . '-' . $run);
-            $exec = $class::getInstance()->{$run}();
-            $this->exec(
-                ArrayHelper::getValue($exec, 'field', ''),
-                ArrayHelper::getValue($exec, 'script', '')
-            );
+        foreach ($scripts as $run) {
+            $field = ArrayHelper::getValue($run, 'field', '');
+            $script = ArrayHelper::getValue($run, 'script', '');
+
+            Console::updateProgress($done++, $total, $title . '-' . $field);
+            $this->exec($field, $script);
         }
         Console::endProgress();
+    }
+
+    public function modifiedArray(array &$list)
+    {
+        $newArray = [];
+        foreach ($list as $key => $value) {
+            if (is_array($value) ) {
+                $newArray[] = array_merge($value, ['name' => $key]);
+            } else {
+                $newArray[] = ['name' => $value];
+            }
+        }
+        $list = $newArray;
     }
 }

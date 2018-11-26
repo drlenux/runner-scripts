@@ -10,6 +10,8 @@
 set_time_limit(0);
 ob_implicit_flush();
 
+define('BASE_DIR', __DIR__);
+
 require __DIR__ . '/vendor/autoload.php';
 
 $config = require __DIR__ . '/config/main.php';

@@ -78,6 +78,25 @@ class App extends Singleton
     }
 
     /**
+     * @param string $name
+     * @return array
+     * @throws Exception
+     */
+    public function getScript($name) {
+        if (!is_string($name)) {
+            throw new Exception('name must be a string');
+        }
+
+        $path = BASE_DIR . '/scripts/' . $name . '.yaml';
+
+        if (!file_exists($path)) {
+            throw new Exception('Script [' . $name . '] not found');
+        }
+
+        return yaml_parse_file($path);
+    }
+
+    /**
      * @throws Exception
      */
     public function run() {

@@ -1,0 +1,9 @@
+pull:
+  field: "git pull"
+  script: "git pull"
+push:
+  field: "git push"
+  script: "git push"
+status:
+  field: "git status"
+  script: "git status"
