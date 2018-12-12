@@ -36,7 +36,7 @@ $config = str_replace('{%project%}', $project, $config);
 $config = str_replace('{%dir%}', $dir, $config);
 
 file_put_contents($configPath . 'main.php', $config);
-if (!file_exists($configPath . 'components.php.sample', $configPath . 'components.php')) {
+if (!file_exists($configPath . 'components.php')) {
     copy($configPath . 'components.php.sample', $configPath . 'components.php');
 }
 
