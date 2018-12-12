@@ -8,4 +8,10 @@ generate_translate:
 clear_cache:
   field: "clear symfony cache"
   script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:clear'"
+clear_folder_cache:
+  field: "clear folder cache"
+  script: "rm -rf ./var/cache/*"
+generate_cache:
+  field: "generate cache"
+  script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:warmup --env=admin_prod'"
 ...

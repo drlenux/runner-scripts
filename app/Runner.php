@@ -84,7 +84,7 @@ class Runner
     {
         $diff = ord('a');
         $selectId = ord($select->get()) - $diff;
-        if ($selectId >= 0 && $selectId <= 4) {
+        if ($selectId >= 0 && $selectId <= 5) {
             $script = TopScripts::getInstance()->getTop()[$selectId];
             if (null !== $script)
                 Exec::getInstance()->run($script);

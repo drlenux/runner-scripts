@@ -44,6 +44,16 @@ $sampleScripts = scandir($scriptsPath);
 $done = 0;
 $total = count($sampleScripts);
 $copyCount = 0;
+$drop = ConsoleHelper::readParams('drop scripts', 'Y/n');
+
+if ($drop === '' || strtolower($drop) === 'y') {
+    foreach ($sampleScripts as $file) {
+        if (preg_match('/.\.yaml/', $file)) {
+            unlink($file);
+        }
+    }
+}
+
 \yii\helpers\Console::startProgress($done, $total, 'copy scripts');
 foreach ($sampleScripts as $file) {
     \yii\helpers\Console::updateProgress(++$done, $total);
