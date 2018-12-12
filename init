@@ -48,7 +48,7 @@ $drop = ConsoleHelper::readParams('drop scripts { y/n }', 'y');
 
 if (strtolower($drop) === 'y') {
     foreach ($sampleScripts as $file) {
-        if (!preg_match('/.\.sample/', $file)) {
+        if (!preg_match('/.\.sample/', $file) && !in_array($file, ['.', '..'])) {
             unlink($scriptsPath . $file);
         }
     }
