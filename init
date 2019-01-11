@@ -55,6 +55,8 @@ if (strtolower($drop) === 'y') {
             unlink($scriptsPath . $file);
         }
     }
+    unlink(__DIR__ . '/config/components.php');
+    copy(__DIR__ . '/config/components.php.sample', __DIR__ . '/config/components.php');
 }
 
 \yii\helpers\Console::startProgress($done, $total, 'copy scripts');
