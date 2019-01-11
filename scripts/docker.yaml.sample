@@ -2,11 +2,11 @@
 start:
   field: "docker start"
   isDocker: "yes"
-  script: "bash ./deploy.sh start"
+  script: "sudo service nginx stop && sudo service mysql stop && bash ./deploy.sh start"
 stop:
   fields: "docker stop"
   isDocker: "yes"
-  scrfipt: "bash ./deploy.sh stop"
+  scrfipt: "bash ./deploy.sh stop && sudo service nginx start && sudo service mysql start"
 clear_memcache:
   field: "clear memcache"
   isDocker: "yes"
