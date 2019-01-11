@@ -11,6 +11,10 @@ clear_memcache:
   field: "clear memcache"
   isDocker: "yes"
   script: "tmp=$(bash ./deploy.sh getip memcached_1) && echo 'flush_all'| netcat -q 1 $tmp 11211"
+clear_cache:
+  field: "clear cache"
+  isDocker: "yes"
+  script: "sudo rm -rf ./var/cache/* && touch ./var/cache/.gitkeep"
 exec:
   field: "docker exec"
   isDocker: "yes"
