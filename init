@@ -31,7 +31,7 @@ if (file_exists($configPath . 'main.php')) {
 
 $dir = ConsoleHelper::readParams('project dir', $dirDefault);
 $project = ConsoleHelper::readParams('project name', $projectDefault);
-$docker_dir = ConsoleHelper::readParams('docker dir', $projectDefault);
+$docker_dir = ConsoleHelper::readParams('docker dir', $docker_dir);
 
 $config = file_get_contents($configPath . 'main.php.sample');
 $config = str_replace('{%project%}', $project, $config);
