@@ -11,7 +11,8 @@ $components = require __DIR__ . '/components.php';
 return [
     'default' => [
         'dir' => '{%dir%}',
-        'project' => '{%project%}'
+        'project' => '{%project%}',
+        'docker_dir' => '{%docker_dir%}'
     ],
     'maxLineSize' => 58,
     'components' => $components,

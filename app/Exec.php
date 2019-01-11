@@ -24,10 +24,17 @@ class Exec extends Singleton
      */
     public function run(array $script)
     {
+        $options = ArrayHelper::getValue($script, 'options', []);
+
+        foreach ($options as $key => &$value) {
+            $value = ConsoleHelper::readParams($key, $value);
+        }
+
         TopScripts::getInstance()->set($script);
         $this->exec(
             ArrayHelper::getValue($script, 'field', ''),
-            ArrayHelper::getValue($script, 'script', [])
+            ArrayHelper::getValue($script, 'script', []),
+            $options
         );
         ConsoleHelper::readParams('press enter');
     }
@@ -45,9 +52,14 @@ class Exec extends Singleton
         foreach ($scripts as $run) {
             $field = ArrayHelper::getValue($run, 'field', '');
             $script = ArrayHelper::getValue($run, 'script', '');
+            $options = ArrayHelper::getValue($script, 'options', []);
+
+            foreach ($options as $key => &$value) {
+                $value = ConsoleHelper::readParams($key, $value);
+            }
 
             Console::updateProgress($done++, $total, $title . '-' . $field);
-            $this->exec($field, $script);
+            $this->exec($field, $script, $options);
         }
         Console::endProgress();
         ConsoleHelper::readParams('press enter');
@@ -56,13 +68,19 @@ class Exec extends Singleton
     /**
      * @param $field
      * @param $script
+     * @param array $options
      * @throws \yii\console\Exception
      */
-    private function exec($field, $script)
+    private function exec($field, $script, array $options)
     {
         while (@ ob_end_flush()) ;
         ConsoleHelper::writeln();
         ConsoleHelper::writeln('>[' . $field . '] : run ...');
+
+        foreach ($options as $key => $value) {
+            $script = str_replace("{%{$key}%}", $value, $script);
+        }
+
         $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . ' && ' . $script;
         $proc = popen($command, 'r');
         while (!feof($proc)) {

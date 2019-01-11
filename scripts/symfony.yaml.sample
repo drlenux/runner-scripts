@@ -13,5 +13,12 @@ clear_folder_cache:
   script: "rm -rf ./var/cache/*"
 generate_cache:
   field: "generate cache"
-  script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:warmup --env=admin_prod'"
+  script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:warmup --env={%env%}'"
+  options:
+    env: "admin_prod"
+console_command:
+  field: "symfony console command"
+  script: "vagrant ssh -c 'cd /www && sudo php bin/console {%command%}'"
+  options:
+    command: ""
 ...

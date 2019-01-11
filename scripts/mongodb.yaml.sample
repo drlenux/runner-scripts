@@ -1,7 +1,9 @@
 ---
 create:
   field: "create mongo schema"
-  script: "vagrant ssh -c 'cd /www && sudo php bin/console doctrine:mongodb:schema:create && sudo php bin/console doctrine:mongodb:schema:create --env=test'"
+  script: "vagrant ssh -c 'cd /www && sudo php bin/console doctrine:mongodb:schema:create && sudo php bin/console doctrine:mongodb:schema:create --env={%env%}'"
+  options:
+    env: "test"
 update:
   field: "mongo update"
   script: "vagrant ssh -c 'cd /www && sudo php ./bin/console doctrine:mongo:schema:update'"
