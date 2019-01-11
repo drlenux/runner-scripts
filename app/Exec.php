@@ -86,6 +86,7 @@ class Exec extends Singleton
         }
 
         $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . ($isDocker) ? App::getInstance()->getDockerDir() : '' . ' && ' . $script;
+        ConsoleHelper::writeln($command);
         $proc = popen($command, 'r');
         while (!feof($proc)) {
             Console::stdout(fread($proc, 4096));
