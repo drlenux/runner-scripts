@@ -2,7 +2,7 @@
 start:
   field: "docker start"
   isDocker: "yes"
-  scrfipt: "bash ./deploy.sh start"
+  script: "bash ./deploy.sh start"
 stop:
   fields: "docker stop"
   isDocker: "yes"
