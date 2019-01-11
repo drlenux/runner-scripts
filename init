@@ -22,18 +22,21 @@ $dirDefault = '';
 
 if (file_exists($configPath . 'main.php')) {
     $config = require $configPath . 'main.php';
-    $projectDefault = ArrayHelper::getValue($config, 'default.project');
+    $projectDefault = ArrayHelper::getValue($config, 'default.project', '/');
     $dirDefault = ArrayHelper::getValue($config, 'default.dir');
+    $docker_dir = ArrayHelper::getValue($config, 'default.docker_dir', '.docker/');
     unset($config);
     unlink($configPath . 'main.php');
 }
 
 $dir = ConsoleHelper::readParams('project dir', $dirDefault);
 $project = ConsoleHelper::readParams('project name', $projectDefault);
+$docker_dir = ConsoleHelper::readParams('docker dir', $projectDefault);
 
 $config = file_get_contents($configPath . 'main.php.sample');
 $config = str_replace('{%project%}', $project, $config);
 $config = str_replace('{%dir%}', $dir, $config);
+$config = str_replace('{%docker_dir%}', $docker_dir, $config);
 
 file_put_contents($configPath . 'main.php', $config);
 if (!file_exists($configPath . 'components.php')) {

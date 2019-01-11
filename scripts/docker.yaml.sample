@@ -1,0 +1,20 @@
+---
+start:
+  field: "docker start"
+  isDocker: "yes"
+  scrfipt: "bash ./deploy.sh start"
+stop:
+  fields: "docker stop"
+  isDocker: "yes"
+  scrfipt: "bash ./deploy.sh stop"
+clear_memcache:
+  field: "clear memcache"
+  isDocker: "yes"
+  script: "tmp=$(bash ./deploy.sh getip memcached_1) && echo 'flush_all'| nc $tmp 11211 &"
+exec:
+  field: "docker exec"
+  isDocker: "yes"
+  script: "bash ./deploy.sh {%command%}"
+  options:
+    command: ""
+...
