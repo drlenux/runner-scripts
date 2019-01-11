@@ -85,8 +85,11 @@ class Exec extends Singleton
             $script = str_replace("{%{$key}%}", $value, $script);
         }
 
-        $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . ($isDocker) ? App::getInstance()->getDockerDir() : '' . ' && ' . $script;
-        ConsoleHelper::writeln($command);
+        $docker_dir = ($isDocker) ? App::getInstance()->getDockerDir() : '';
+
+        $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . $docker_dir . ' && ' . $script;
+        ConsoleHelper::writeln('> ' . $command);
+
         $proc = popen($command, 'r');
         while (!feof($proc)) {
             Console::stdout(fread($proc, 4096));
