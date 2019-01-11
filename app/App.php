@@ -33,6 +33,8 @@ class App extends Singleton
      */
     private $project = '';
 
+    private $docker_dir = '';
+
     /**
      * @param $key
      * @param null $default
@@ -78,6 +80,14 @@ class App extends Singleton
     }
 
     /**
+     * @return string
+     */
+    public function getDockerDir()
+    {
+        return $this->docker_dir;
+    }
+
+    /**
      * @param string $name
      * @return array
      * @throws Exception
@@ -106,6 +116,7 @@ class App extends Singleton
         ConsoleHelper::fillLine('Scripts');
         $this->dir = ConsoleHelper::readParams('Project dir', $this->getConfig('default.dir'));
         $this->project = ConsoleHelper::readParams('Project name', $this->getConfig('default.project'));
+        $this->docker_dir = ConsoleHelper::readParams('Project name', $this->getConfig('default.docker_dir'));
         (new Runner());
     }
 }
