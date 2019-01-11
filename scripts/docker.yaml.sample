@@ -6,7 +6,7 @@ start:
 stop:
   fields: "docker stop"
   isDocker: "yes"
-  scrfipt: "bash ./deploy.sh stop && sudo service nginx start && sudo service mysql start"
+  script: "bash ./deploy.sh stop && sudo service nginx start && sudo service mysql start"
 clear_memcache:
   field: "clear memcache"
   isDocker: "yes"
