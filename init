@@ -19,12 +19,13 @@ $scriptsPath = __DIR__ . '/scripts/';
 
 $projectDefault = '';
 $dirDefault = '';
+$docker_dir = '/.docker';
 
 if (file_exists($configPath . 'main.php')) {
     $config = require $configPath . 'main.php';
     $projectDefault = ArrayHelper::getValue($config, 'default.project', '/');
     $dirDefault = ArrayHelper::getValue($config, 'default.dir');
-    $docker_dir = ArrayHelper::getValue($config, 'default.docker_dir', '.docker/');
+    $docker_dir = ArrayHelper::getValue($config, 'default.docker_dir', '/.docker');
     unset($config);
     unlink($configPath . 'main.php');
 }
