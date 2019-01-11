@@ -10,4 +10,5 @@ return [
     'symfony',
     'vagrant',
     'install-all',
+    'docker',
 ];
