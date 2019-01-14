@@ -10,8 +10,29 @@ status:
   script: "git status"
 resolve_conflict:
   field: "git resolve conflict"
-  scripts: "git reset --mixed HEAD~{%count_commit%} && git stash && git rebase {%rebase_branch%} && git push --force && git stash apply"
+  script: "git reset --mixed HEAD~{%count_commit%} && git stash && git rebase {%rebase_branch%} && git push --force && git stash apply"
   options:
     count_commit: "1"
     rebase_branch: "origin/master"
+checkout:
+  field: "git checkout"
+  script: "git checkout {%branch%}"
+  options:
+    branch: "origin/master"
+reset:
+  field: "git reset"
+  script: "git reset {%type%}"
+  options:
+    type: "--hard"
+commit:
+  field: "git commit"
+  script: "git commit -m '{%message%}'"
+  options:
+    message: ""
+stash:
+  field: "git stash"
+  script: "git stash"
+stash_apply:
+  field: "git stash apply"
+  script: "git stash apply"
 ...
