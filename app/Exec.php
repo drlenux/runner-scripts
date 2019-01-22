@@ -81,14 +81,14 @@ class Exec extends Singleton
         ConsoleHelper::writeln();
         ConsoleHelper::writeln('>[' . $field . '] : run ...');
 
-        foreach ($options as $key => $value) {
-            $script = str_replace("{%{$key}%}", $value, $script);
-        }
-
         $docker_dir = ($isDocker) ? App::getInstance()->getDockerDir() : '';
 
         $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . $docker_dir . ' && ' . $script;
-        ConsoleHelper::writeln('> ' . $command);
+        ConsoleHelper::writeln("\r\n> " . $command . "\r\n");
+
+        foreach ($options as $key => $value) {
+            $script = str_replace("{%{$key}%}", $value, $script);
+        }
 
         $proc = popen($command, 'r');
         while (!feof($proc)) {
