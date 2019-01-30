@@ -87,8 +87,10 @@ class Exec extends Singleton
         ConsoleHelper::writeln("\r\n> " . $command . "\r\n");
 
         foreach ($options as $key => $value) {
-            $script = str_replace("{%{$key}%}", $value, $script);
+            $command = str_replace("{%{$key}%}", $value, $command);
         }
+        ConsoleHelper::writeln("\r\n> " . $command . "\r\n");
+        ConsoleHelper::writeln("\r\n");
 
         $proc = popen($command, 'r');
         while (!feof($proc)) {
