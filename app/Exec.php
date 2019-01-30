@@ -27,6 +27,8 @@ class Exec extends Singleton
         $options = ArrayHelper::getValue($script, 'options', []);
         $isDocker = ArrayHelper::getValue($script, 'isDocker', 'no') === 'yes';
 
+        ConsoleHelper::writeln("\r\n> " . ArrayHelper::getValue($script, 'script', '') . "\r\n");
+
         foreach ($options as $key => &$value) {
             $value = ConsoleHelper::readParams($key, $value);
         }
@@ -57,6 +59,7 @@ class Exec extends Singleton
             $options = ArrayHelper::getValue($script, 'options', []);
             $isDocker = ArrayHelper::getValue($script, 'isDocker', 'no') === 'yes';
 
+            ConsoleHelper::writeln("\r\n> " . $script . "\r\n");
             foreach ($options as $key => &$value) {
                 $value = ConsoleHelper::readParams($key, $value);
             }
@@ -84,7 +87,6 @@ class Exec extends Singleton
         $docker_dir = ($isDocker) ? App::getInstance()->getDockerDir() : '';
 
         $command = 'cd ' . App::getInstance()->getDir() . App::getInstance()->getProject() . $docker_dir . ' && ' . $script;
-        ConsoleHelper::writeln("\r\n> " . $command . "\r\n");
 
         foreach ($options as $key => $value) {
             $command = str_replace("{%{$key}%}", $value, $command);
