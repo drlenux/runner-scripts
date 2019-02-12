@@ -21,6 +21,11 @@ runners-update
 runners-unistall
 ```
 
+## Install template
+```bash
+runners-template-install
+``` 
+
 ## require
 
 - php `>= 5.6`

@@ -1,0 +1,6 @@
+---
+install:
+  field: "composer install"
+  isDocker: "yes"
+  script: "./deploy.sh composer_install"
+...

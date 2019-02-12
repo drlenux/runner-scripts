@@ -16,9 +16,4 @@ generate_cache:
   script: "vagrant ssh -c 'cd /www && sudo php bin/console cache:warmup --env={%env%}'"
   options:
     env: "admin_prod"
-console_command:
-  field: "symfony console command"
-  script: "vagrant ssh -c 'cd /www && sudo php bin/console {%command%}'"
-  options:
-    command: ""
 ...

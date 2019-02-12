@@ -1,0 +1,6 @@
+---
+clear:
+  field: "clear memcache"
+  isDocker: "yes"
+  script: "tmp=$(bash ./deploy.sh getip memcached_1) && echo 'flush_all'| netcat -q 1 $tmp 11211"
+...

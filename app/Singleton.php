@@ -32,11 +32,17 @@ abstract class Singleton
         return self::$instance[$getCalledClass];
     }
 
+    protected function init()
+    {
+
+    }
+
     /**
      * Singleton constructor.
      */
     protected function __construct()
     {
+        $this->init();
     }
 
     /**

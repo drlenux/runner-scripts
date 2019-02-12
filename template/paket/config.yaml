@@ -1,0 +1,10 @@
+---
+dir: ""
+docker_dir: ""
+scripts:
+  - docker
+  - composer
+  - git
+  - memcached
+  - mysql
+...

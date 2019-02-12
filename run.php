@@ -14,6 +14,6 @@ define('BASE_DIR', __DIR__);
 
 require __DIR__ . '/vendor/autoload.php';
 
-$config = require __DIR__ . '/config/main.php';
+$config = yaml_parse_file(__DIR__ . '/projects/config.yaml');
 
 \app\App::getInstance()->setConfig($config)->run();

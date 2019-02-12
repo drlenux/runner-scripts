@@ -1,0 +1,12 @@
+---
+rollback:
+  field: "mysql rollback"
+  isDocker: "yes"
+  script: "./deploy.sh rollback {%timepoint%}"
+  options:
+    timepoint: ""
+migrate:
+  field: "mysql migrate"
+  isDocker: "yes"
+  script: "./deploy.sh migrate"
+...

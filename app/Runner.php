@@ -8,9 +8,7 @@
 
 namespace app;
 
-use scripts\Scripts;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Console;
+use helpers\ConsoleHelper;
 
 /**
  * Class Runner
@@ -20,89 +18,46 @@ class Runner
 {
     /**
      * Runner constructor.
-     * @throws \yii\console\Exception
      */
     public function __construct()
     {
-        $components = App::getInstance()->getConfig('components', []);
+        $components = App::getInstance()->getConfig('scripts', App::getInstance()->getProject(), []);
         do {
-            Console::clearScreen();
+            ConsoleHelper::getInstance()->clearScreen();
             $isContinue = $this->run('Commands list', $components);
         } while ($isContinue);
     }
-
-    /**
-     * @param array $list
-     * @param int $numbering
-     * @param bool $isBack
-     * @throws \yii\console\Exception
-     */
-
 
     /**
      * @param $title
      * @param array $scripts
      * @param bool $isScript
      * @return bool
-     * @throws \yii\console\Exception
      */
     private function run($title, array $scripts, $isScript = false)
     {
-        ConsoleHelper::fillLine($title);
-
-        $this->modifiedArray($scripts);
-        RenderList::getInstance()->run($scripts, $isScript);
-        $select = new Select('run');
-
-
-        if ('*' === $select->get() && $isScript) {
-            Exec::getInstance()->runAll($title, $scripts);
-            return $this->run($title, $scripts, $isScript);
-        }
-
-        if ($this->checkTopClick($select)) {
-            return true;
-        }
-
-        if (0 === $select->getInt()) {
-            if (!$isScript) {
-                return false;
-            }
-            return true;
-        }
-        $script = $scripts[$select->getInt() - 1];
+        ConsoleHelper::getInstance()->fillLine($title);
         if ($isScript) {
-            Exec::getInstance()->run($script);
+           $list = array_keys($scripts);
+           $list[] = 'back';
+        } else {
+            $list = $scripts;
+        }
+
+        $list[] = 'exit';
+        $select = ConsoleHelper::getInstance()->getListSelected('Run', $list, 0);
+
+        if ('exit' === $select) {
+            return 0;
+        }
+        if ('back' === $select) {
+            return 1;
+        }
+        if ($isScript) {
+            Exec::getInstance()->run($scripts[$select]);
             return $this->run($title, App::getInstance()->getScript($title), $isScript);
         } else {
-            $selectName = $script['name'];
-            return $this->run($selectName, App::getInstance()->getScript($selectName),true);
+            return $this->run($select, App::getInstance()->getScript($select),true);
         }
-    }
-
-    private function checkTopClick(Select $select)
-    {
-        $diff = ord('a');
-        $selectId = ord($select->get()) - $diff;
-        if ($selectId >= 0 && $selectId <= 5) {
-            $script = TopScripts::getInstance()->getTop()[$selectId];
-            if (null !== $script)
-                Exec::getInstance()->run($script);
-            return true;
-        }
-        return false;
-    }
-
-    public function modifiedArray(array &$list)
-    {
-        $newArray = [];
-        foreach ($list as $key => $value) {
-            if (is_array($value) ) {
-                $newArray[] = array_merge($value, ['name' => $key]);
-            } else {
-                $newArray[] = ['name' => $value];
-            }
-        }
-        $list = $newArray;
     }
 }

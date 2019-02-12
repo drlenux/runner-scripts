@@ -1,0 +1,14 @@
+---
+dir: ""
+docker_dir: ""
+scripts:
+  - composer
+  - cron
+  - git
+  - install-all
+  - memcached
+  - mongodb
+  - mysql
+  - symfony
+  - vagrant
+...

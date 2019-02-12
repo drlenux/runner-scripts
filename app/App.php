@@ -8,9 +8,13 @@
 
 namespace app;
 
-use yii\console\Exception;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Console;
+use helpers\ArrayHelper;
+use helpers\ConsoleHelper;
+use Symfony\Component\Console\Exception\LogicException as Exception;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Class App
@@ -35,16 +39,20 @@ class App extends Singleton
 
     private $docker_dir = '';
 
-    /**
-     * @param $key
+    /**\
+     * @param string $key
+     * @param string $project
      * @param null $default
      * @return mixed
-     * @throws Exception
      */
-    public function getConfig($key, $default = null)
+    public function getConfig($key, $project = '', $default = null)
     {
         if (!is_string($key))
             throw new Exception('key must be string');
+
+        if (strlen($project)) {
+            $key = $project . '.' . $key;
+        }
 
         return ArrayHelper::getValue($this->config, $key, $default);
     }
@@ -60,6 +68,11 @@ class App extends Singleton
             throw new Exception('config already installed');
 
         $this->config = ArrayHelper::toArray($config);
+
+        foreach ($config['projects'] as $project) {
+            $this->config[$project] = yaml_parse_file(BASE_DIR . '/projects/' . $project . '/config.yaml');
+        }
+
         return $this;
     }
 
@@ -97,7 +110,7 @@ class App extends Singleton
             throw new Exception('name must be a string');
         }
 
-        $path = BASE_DIR . '/scripts/' . $name . '.yaml';
+        $path = BASE_DIR . '/projects/' . $this->project . '/' . $name . '.yaml';
 
         if (!file_exists($path)) {
             throw new Exception('Script [' . $name . '] not found');
@@ -112,11 +125,12 @@ class App extends Singleton
     public function run() {
         if (!count($this->config))
             throw new Exception('config is empty');
-        Console::clearScreen();
-        ConsoleHelper::fillLine('Scripts');
-        $this->dir = ConsoleHelper::readParams('Project dir', $this->getConfig('default.dir'));
-        $this->project = ConsoleHelper::readParams('Project name', $this->getConfig('default.project'));
-        $this->docker_dir = ConsoleHelper::readParams('Project name', $this->getConfig('default.docker_dir'));
+
+        ConsoleHelper::getInstance()->clearScreen();
+        ConsoleHelper::getInstance()->fillLine('Projects');
+        $this->project = ConsoleHelper::getInstance()->getListSelected('Project name', $this->getConfig('projects', '', []), 0);
+        $this->dir = $this->getConfig('dir', $this->project);
+        $this->docker_dir = $this->getConfig('docker_dir', $this->project);
         (new Runner());
     }
 }
