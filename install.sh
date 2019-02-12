@@ -56,7 +56,7 @@ main() {
     exit 1
   }
 
-  cd ~/.runner-scripts/ && composer install && ./init
+  cd ~/.runner-scripts/ && composer install
 
   sudo chmod +x ~/.runner-scripts/run.php
   sudo chmod +x ~/.runner-scripts/update.sh
