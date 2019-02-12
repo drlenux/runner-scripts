@@ -98,8 +98,11 @@ class ConsoleHelper extends Singleton
      * @param string $errorMessage
      * @return mixed
      */
-    public function getListSelected($question = '', array $list = [], $default = 0, $errorMessage = '')
+    public function getListSelected($question = '', array $list = [], $default = null, $errorMessage = '')
     {
+        if (null === $default) {
+            $default = count($list) - 1;
+        }
         $helper = new QuestionHelper();
         $question = new ChoiceQuestion($question, $list, $default);
         $question->setErrorMessage($errorMessage);

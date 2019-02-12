@@ -45,7 +45,7 @@ class Runner
         }
 
         $list[] = 'exit';
-        $select = ConsoleHelper::getInstance()->getListSelected('Run', $list, 0);
+        $select = ConsoleHelper::getInstance()->getListSelected('Run', $list);
 
         if ('exit' === $select) {
             return 0;

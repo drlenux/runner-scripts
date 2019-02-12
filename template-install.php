@@ -82,8 +82,7 @@ class InstallTemplate
         $this->selected = ConsoleHelper::getInstance()
             ->getListSelected(
                 'Select template',
-                ArrayHelper::getValue($this->config, 'templates', []),
-                0
+                ArrayHelper::getValue($this->config, 'templates', [])
             );
         mkdir(__DIR__ . '/projects', 0777);
         $this->recurseCopy($this->getTemplateDirPath(), $this->getProjectsDirPath());
