@@ -1,7 +1,8 @@
 {
   "name": "drlenux/run_scripts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "composer-plugin",
+  "minimum-stability": "dev",
   "description": "",
   "require": {
     "php": ">=5.6",
