@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd ~/.runner-scripts/ && git reset --hard  && git pull &&
-sudo rm /usr/bin/runners* &&
+sudo rm -rf /usr/bin/runners* &&
 sudo chmod +x ~/.runner-scripts/run.php &&
 sudo chmod +x ~/.runner-scripts/update.sh &&
 sudo chmod +x ~/.runner-scripts/unistall.sh &&

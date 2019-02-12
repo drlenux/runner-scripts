@@ -61,7 +61,7 @@ main() {
   sudo chmod +x ~/.runner-scripts/run.php
   sudo chmod +x ~/.runner-scripts/update.sh
   sudo chmod +x ~/.runner-scripts/unistall.sh
-  sudo chmod +x ~/.runner-scripts/template-install
+  sudo chmod +x ~/.runner-scripts/template-install.php
   sudo ln -s ~/.runner-scripts/run.php /usr/bin/runners
   sudo ln -s ~/.runner-scripts/update.sh /usr/bin/runners-update
   sudo ln -s ~/.runner-scripts/unistall.sh /usr/bin/runners-unistall
