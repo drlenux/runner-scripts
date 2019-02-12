@@ -1,11 +1,11 @@
 {
   "name": "drlenux/run_scripts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "composer-plugin",
   "description": "",
   "require": {
     "php": ">=5.6",
-    "yiisoft/yii2": "2.*",
+    "yiisoft/yii2": "^2",
     "ext-yaml": "*",
     "ext-json": "*",
     "ext-zlib": "*"
