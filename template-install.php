@@ -85,6 +85,7 @@ class InstallTemplate
                 ArrayHelper::getValue($this->config, 'templates', []),
                 0
             );
+        mkdir(__DIR__ . '/projects', 0777);
         $this->recurseCopy($this->getTemplateDirPath(), $this->getProjectsDirPath());
         $this->rewriteConfig();
     }
