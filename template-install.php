@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+set_time_limit(0);
+ob_implicit_flush();
+error_reporting(E_NOTICE);
+
 use helpers\ArrayHelper;
 use helpers\ConsoleHelper;
 
