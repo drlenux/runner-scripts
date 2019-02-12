@@ -1,5 +1,7 @@
 {
   "name": "drlenux/run_scripts",
+  "version": "1.0.1",
+  "minimum-stability": "stable",
   "type": "project",
   "require": {
     "php": ">=5.6",
