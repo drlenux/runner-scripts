@@ -58,7 +58,7 @@ class ConsoleHelper extends Singleton
     public function readParams($name, $placeHolder = null)
     {
         $helper = new QuestionHelper();
-        $question = new Question($name . ': ', $placeHolder);
+        $question = new Question($name . '(' . $placeHolder . '): ', $placeHolder);
         $res = $helper->ask(new ArgvInput(), $this->getDi('console'), $question);
 
         if ('' === $res) {
